@@ -258,9 +258,8 @@
 		background-color: #292c6d;
 		padding: 1rem;
 		display: flex;
-		flex-direction: row-reverse;
 		flex-wrap: wrap;
-		justify-content: flex-end;
+		justify-content: flex-start;
 		border-radius: 0.5rem;
 		min-height: 8rem;
 		gap: 1rem;
