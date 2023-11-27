@@ -81,47 +81,53 @@
 	};
 </script>
 
-<h1 class="header">Pixelate 2024 Raffle</h1>
+<main>
+	<div class="content">
+		<h1 class="header">Pixelate 2024 Raffle</h1>
 
-<section>
-	<h2 class="subheader">Katılımcılar</h2>
-	<div class="people">
-		{#each originalPeople as person}
-			<span
-				class="person"
-				class:drawed={drawedPeople.includes(person)}
-				class:received={receivedPeople.includes(person)}>{person}</span
-			>
-		{/each}
-	</div>
-</section>
-
-<button
-	class="draw-button"
-	disabled={isDrawing || totalDraws === originalPeople.length}
-	on:click={draw}
->
-	{#if isDrawing}
-		Çekiliyor...
-	{:else if totalDraws === originalPeople.length}
-		Çekiliş Yapıldı
-	{:else}
-		Çekiliş Yap
-	{/if}
-</button>
-
-<section class="matches">
-	<h2 class="subheader">Eşleşmeler</h2>
-	<div class="matched-people" class:empty={matchedPeople.length === 0}>
-		{#each matchedPeople as matched}
-			<div in:fade>
-				<Matched match={matched} />
+		<section>
+			<h2 class="subheader">Katılımcılar</h2>
+			<div class="people">
+				{#each originalPeople as person}
+					<span
+						class="person"
+						class:drawed={drawedPeople.includes(person)}
+						class:received={receivedPeople.includes(person)}>{person}</span
+					>
+				{/each}
 			</div>
-		{:else}
-			<div>Henüz çekiliş yapılmadı.</div>
-		{/each}
+		</section>
+
+		<button
+			class="draw-button"
+			disabled={isDrawing || totalDraws === originalPeople.length}
+			on:click={draw}
+		>
+			{#if isDrawing}
+				Çekiliyor...
+			{:else if totalDraws === originalPeople.length}
+				Çekiliş Yapıldı
+			{:else}
+				Çekiliş Yap
+			{/if}
+		</button>
+
+		<section class="matches">
+			<h2 class="subheader">Eşleşmeler</h2>
+			<div class="matched-people" class:empty={matchedPeople.length === 0}>
+				{#each matchedPeople as matched}
+					<div in:fade>
+						<Matched match={matched} />
+					</div>
+				{:else}
+					<div>Henüz çekiliş yapılmadı.</div>
+				{/each}
+			</div>
+		</section>
 	</div>
-</section>
+
+	<a href="https://onderb.dev" class="ob"><img src="/ob.svg" alt="Önder Bakırtaş" /></a>
+</main>
 
 {#if !isDrawing && isStarted}
 	<div class="confetti">
@@ -137,6 +143,13 @@
 {/if}
 
 <style>
+	main {
+		padding: 1rem;
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+	}
+
 	.confetti {
 		position: fixed;
 		top: -50px;
@@ -153,7 +166,7 @@
 		text-align: center;
 		font-family: 'Codystar', sans-serif;
 		margin: 2rem 0 3rem;
-		font-size: 4rem;
+		font-size: clamp(2rem, 5vw, 4rem);
 		letter-spacing: 0.5rem;
 		text-shadow: 0 0 0.5rem #faedf0;
 		animation: blink 1s infinite;
@@ -255,6 +268,21 @@
 	.matched-people.empty {
 		justify-content: center;
 		align-items: center;
+	}
+
+	.ob {
+		display: block;
+		margin: auto auto 0.5rem;
+		width: 2rem;
+		opacity: 0.5;
+	}
+
+	.ob:hover {
+		opacity: 1;
+	}
+
+	.ob img {
+		width: 2rem;
 	}
 
 	@keyframes blink {
