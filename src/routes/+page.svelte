@@ -134,7 +134,7 @@
 		<Confetti
 			x={[-5, 5]}
 			y={[0, 0.1]}
-			delay={[50, 1000]}
+			delay={[50, 3000]}
 			duration="1500"
 			amount="1000"
 			fallDistance="100vh"
