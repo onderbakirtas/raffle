@@ -3,10 +3,14 @@
 
 	import Matched from '../lib/Matched.svelte';
 	import { fade } from 'svelte/transition';
+	import { onMount } from 'svelte';
+
+	let audioEl = null;
 
 	let isDrawing = false;
 	let isStarted = false;
 	let totalDraws = 0;
+	let overlayVisible = true;
 
 	let people = [
 		'Abdurrahman',
@@ -15,7 +19,7 @@
 		'Esra',
 		'Furkan',
 		'Gökçe',
-		'Kadir',
+		// 'Kadir', sadlife
 		'Kasım',
 		'Melih',
 		'Murat',
@@ -79,6 +83,18 @@
 			totalDraws += 1;
 		}, 2000);
 	};
+
+	const handleOverlayClick = () => {
+		overlayVisible = false;
+		audioEl.play();
+	};
+
+	onMount(() => {
+		audioEl.src = '/jb.mp3';
+		audioEl.volume = 0.1;
+		// audioEl.autoplay = true;
+		audioEl.loop = true;
+	});
 </script>
 
 <main>
@@ -127,6 +143,15 @@
 	</div>
 
 	<a href="https://onderb.dev" class="ob"><img src="/ob.svg" alt="Önder Bakırtaş" /></a>
+
+	<audio bind:this={audioEl} />
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	{#if overlayVisible}
+		<div class="overlay" out:fade on:click={handleOverlayClick}>
+			<h1>2024 hediye çekilişine hepiniz hoşgeldiniz.</h1>
+		</div>
+	{/if}
 </main>
 
 {#if !isDrawing && isStarted}
@@ -148,6 +173,20 @@
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
+		position: relative;
+	}
+
+	.overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 100vh;
+		width: 100vw;
+		background-color: rgb(41, 44, 107, 0.8);
+		z-index: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.confetti {
@@ -176,12 +215,6 @@
 		text-align: center;
 		margin: 1rem 0;
 		font-size: 1.5rem;
-	}
-
-	.matches {
-		margin-top: 2rem;
-		display: flex;
-		flex-direction: column;
 	}
 
 	.draw-button {
@@ -245,6 +278,13 @@
 		color: #ec255a;
 	}
 
+	.matches {
+		margin-top: 2rem;
+		margin-bottom: 2rem;
+		display: flex;
+		flex-direction: column;
+	}
+
 	.matches .subheader {
 		background-color: #292c6d;
 		padding: 0.75rem 1.5rem 0.5rem;
@@ -283,6 +323,12 @@
 
 	.ob img {
 		width: 2rem;
+	}
+
+	audio {
+		visibility: hidden;
+		height: 0;
+		width: 0;
 	}
 
 	@keyframes blink {
