@@ -19,6 +19,7 @@
 		'Esra',
 		'Furkan',
 		'Gökçe',
+		'Talha',
 		// 'Kadir', sadlife
 		'Kasım',
 		'Melih',
